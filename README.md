@@ -3,7 +3,7 @@
 2. Запустить команную строку от имени администратора в папке со скачанными файлами.
 3. Выполнить 5 команды по очереди:
    1. pip install pyinstaller
-   2. pip install pypy.py
+   2. python pypy.py
    3. pyinstaller --onefile set.py
    4. pyinstaller --onefile pnz.py
    5. pyinstaller --onefile cfg.py
