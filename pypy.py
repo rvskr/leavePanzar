@@ -4,7 +4,7 @@ import shutil
 import os
 
 dependencies = [
-    "pyinstaller",  # Добавляем запятую здесь
+    "pyinstaller", 
     "keyboard",
     "psutil",
     "pyautogui",
