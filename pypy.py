@@ -1,6 +1,10 @@
 import subprocess
+import concurrent.futures
+import shutil
+import os
 
 dependencies = [
+    "pyinstaller",  # Добавляем запятую здесь
     "keyboard",
     "psutil",
     "pyautogui",
@@ -8,7 +12,7 @@ dependencies = [
     "numpy",
     "pywin32",
     "pyscreeze",
-    "Pillow"
+    "Pillow",
 ]
 
 # Создаем список команд для установки каждого пакета
@@ -22,29 +26,8 @@ for process in processes:
     process.wait()
 
 print("Все зависимости успешно установлены.")
-import subprocess
-import concurrent.futures
-import shutil
-import os
 
-dependencies = [
-    "keyboard",
-    "psutil",
-    "pyautogui",
-    "opencv-python",
-    "numpy",
-    "pywin32",
-    "pyscreeze",
-    "Pillow"
-]
-
-# Установка зависимостей
-for dep in dependencies:
-    subprocess.run(["pip", "install", dep], check=True)
-
-print("Все зависимости успешно установлены.")
-
-# Выполнение дополнительных команд
+# Выполняем дополнительные команды параллельно
 additional_commands = [
     "pyinstaller --onefile set.py",
     "pyinstaller --onefile pnz.py",
@@ -60,20 +43,20 @@ with concurrent.futures.ThreadPoolExecutor() as executor:
 
 print("Дополнительные команды выполнены.")
 
-# Определение путей к папкам, которые нужно скопировать
+# Определяем пути к папкам, которые нужно скопировать
 source_folders = [
     "img",
     "Config by Danze"
 ]
 
-# Определение путей к исходной и целевой папкам
+# Определяем пути к исходной и целевой папкам
 source_directory = os.path.dirname(os.path.abspath(__file__))  # Путь к текущей папке скрипта
 target_directory = os.path.join(source_directory, "dist")
 
-# Создание целевой папки, если она не существует
+# Создаем целевую папку, если она не существует
 os.makedirs(target_directory, exist_ok=True)
 
-# Копирование папок
+# Копируем папки
 for folder in source_folders:
     source_path = os.path.join(source_directory, folder)
     target_path = os.path.join(target_directory, folder)
