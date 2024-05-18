@@ -1,10 +1,12 @@
 Сборка:
 1. Установить питон https://www.python.org/downloads/
-2. Запустить команную строку в папке со скачанными файлами.
-3. Выполнить 3 команды по очереди:
-   3.1. pyinstaller --onefile set.py
-   3.2 pyinstaller --onefile pnz.py
-   3.3 pyinstaller --onefile cfg.py
+2. Запустить команную строку от имени администратора в папке со скачанными файлами.
+3. Выполнить 5 команды по очереди:
+   1. pip install pyinstaller
+   2. python pypy.py
+   3. pyinstaller --onefile set.py
+   4. pyinstaller --onefile pnz.py
+   5. pyinstaller --onefile cfg.py
 4. Все готово, можно пользоваться.
 5. Запускаем set.exe
 
