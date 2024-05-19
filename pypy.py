@@ -13,6 +13,7 @@ dependencies = [
     "pywin32",
     "pyscreeze",
     "Pillow",
+    "pygame"
 ]
 
 # Создаем список команд для установки каждого пакета
