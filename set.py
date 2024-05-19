@@ -5,7 +5,8 @@ import psutil
 import os
 import ctypes
 import configparser
-import sys  
+import sys
+import pygame  # Импортируем pygame
 
 config_file = 'config.ini'
 
@@ -15,6 +16,8 @@ class TimerApp:
         self.remaining_time = self.default_time
         self.running = True
         self.cfg_executed = False
+
+        pygame.mixer.init()  # Инициализация микшера pygame
 
         self.setup_gui()
         self.setup_hotkeys()
@@ -47,9 +50,6 @@ class TimerApp:
             print("Ошибка: Файл cfg.exe не найден.")
             sys.exit()  # Завершаем выполнение скрипта в случае ошибки
 
-    # Остальной код остается без изменений...
-
-
     def setup_gui(self):
         self.read_config()
         self.root = tk.Tk()
@@ -80,7 +80,10 @@ class TimerApp:
         if self.running:
             self.remaining_time -= 1
             self.update_display()
-            
+
+            if self.remaining_time == 10:
+                self.play_sound()
+
             if self.remaining_time <= 1:
                 self.remaining_time = self.default_time
                 self.close_process_via_task_manager("pnzcl.exe")  # Закрыть процесс pnzcl.exe
@@ -110,6 +113,7 @@ class TimerApp:
             self.remaining_time = self.default_time
             self.update_display()
             print("Таймер сброшен")
+            pygame.mixer.music.stop()  # Останавливаем звук
         elif key == '/':
             self.remaining_time = 1
             self.update_display()
@@ -121,7 +125,6 @@ class TimerApp:
         elif key == 'home':
             self.close_processes_in_order()
             print("Все процессы закрыты")
-
 
     def close_process_via_task_manager(self, process_name):
         os.system(f"taskkill /F /IM {process_name}")
@@ -158,6 +161,13 @@ class TimerApp:
             # Если файл не найден, выводим сообщение об ошибке
             print("Ошибка: Файл start.exe не найден.")
 
+    def play_sound(self):
+        try:
+            pygame.mixer.music.load("sound.mp3")
+            pygame.mixer.music.play()
+        except pygame.error as e:
+            print(f"Ошибка воспроизведения звука: {e}")
+
     def on_click(self, event):
         pass
 
@@ -165,9 +175,9 @@ class TimerApp:
         print("Описание кнопок:")
         print("+: Добавить 10 секунд")
         print("-: Убрать 10 секунд")
-        print("*: Сбросить таймер")
+        print("*: Сбросить таймер и остановить звук")
         print("/: Нажмите для старта/перезагрузки Panzar")
-        print("Home:Закрыть все процессы")
+        print("Home: Закрыть все процессы")
 
 if __name__ == "__main__":
     TimerApp().root.mainloop()

@@ -57,3 +57,7 @@ dist/pnz.exe
 dist/set.exe
 pnz.spec
 set.spec
+set.exe
+pnz.exe
+cfg.exe
+config.ini
